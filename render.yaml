@@ -1,0 +1,68 @@
+services:
+  - type: web
+    name: benja-hex-auth-web
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: APP_URL
+        value: https://auth.benjahex.qzz.io
+      - key: DISCORD_CLIENT_ID
+        value: "1552239931898859550"
+      - key: DISCORD_REDIRECT_URI
+        value: https://auth.benjahex.qzz.io/api/auth/callback
+      - key: DISCORD_ADMIN_IDS
+        value: "1337766817694744588"
+      - key: MONGODB_DB_NAME
+        value: discord_vercel_oauth
+      - key: DISCORD_GUILDS_JSON
+        value: '[{"id":"1435304112877998131","name":"Server 1","roleId":"1436054335220875284"},{"id":"1535164246852374550","name":"Server 2","roleId":"1542721497091538970"}]'
+      - key: NEXT_PUBLIC_DISCORD_INVITE_URL
+        value: https://discord.com/app
+      - key: DISCORD_CLIENT_SECRET
+        sync: false
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: TOKEN_ENCRYPTION_KEY
+        sync: false
+      - key: AUTH_SECRET
+        sync: false
+      - key: CRON_SECRET
+        sync: false
+
+  - type: cron
+    name: benja-hex-auth-refresh
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run cron:refresh
+    schedule: "0 * * * *"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: APP_URL
+        value: https://auth.benjahex.qzz.io
+      - key: DISCORD_CLIENT_ID
+        value: "1552239931898859550"
+      - key: DISCORD_REDIRECT_URI
+        value: https://auth.benjahex.qzz.io/api/auth/callback
+      - key: MONGODB_DB_NAME
+        value: discord_vercel_oauth
+      - key: DISCORD_GUILDS_JSON
+        value: '[{"id":"1435304112877998131","name":"Server 1","roleId":"1436054335220875284"},{"id":"1535164246852374550","name":"Server 2","roleId":"1542721497091538970"}]'
+      - key: DISCORD_CLIENT_SECRET
+        sync: false
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: TOKEN_ENCRYPTION_KEY
+        sync: false
