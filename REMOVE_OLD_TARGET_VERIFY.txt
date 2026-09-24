@@ -1,0 +1,21 @@
+IMPORTANT BOT CLEANUP
+
+The old target-server verification cog shown in chat is incompatible with OAuth role-sync.
+
+It contains:
+
+TARGET_GUILD_ID = 1535164246852374550
+UNVERIFIED_ROLE_ID = 1542721497091538970
+
+and a GuildMemberAdd listener that automatically adds that role on join.
+
+Disable/remove that old cog from the bot before using the OAuth-aware cogs/verify.js.
+
+The old cog also has a legacy VERIFY button that removes the role without OAuth authorization. Disable that too.
+
+Keep the OAuth-aware cogs/verify.js from this folder. It uses:
+- Server 1: 1435304112877998131 -> role 1436054335220875284
+- Server 2: 1535164246852374550 -> role 1542721497091538970
+- https://auth.benjahex.qzz.io
+
+MongoDB role-sync is fail-safe: when MongoDB is unavailable, it does not mass-remove roles.
